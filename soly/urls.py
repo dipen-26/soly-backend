@@ -1,22 +1,27 @@
 """
-URL configuration for soly project.
+soly/urls.py
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+URL configuration for the Soly project.
+This file maps URL patterns to views and includes routes for all major apps and admin functionality.
+It organizes the API endpoints and ensures requests are routed to the correct logic.
 """
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),  # Django admin interface
+    path('api/accounts/', include('accounts.urls')),  # User management endpoints
+    path('api/streams/', include('streams.urls')),  # Live streaming endpoints
+    path('api/analytics/', include('analytics.urls')),  # Analytics endpoints
+    path('api/chat/', include('chat.urls')),  # Real-time chat endpoints
+    path('api/content/', include('content.urls')),  # VODs, highlights, playlists endpoints
+    path('api/notifications/', include('notifications.urls')),  # Notifications endpoints
+    path('api/monetization/', include('monetization.urls')),  # Monetization endpoints
+    # Knox token authentication endpoints
+    path('api/auth/', include('knox.urls')),
+    # Optionally, add session authentication endpoints if needed
 ]
+
+# This file is the central routing hub for the backend, connecting all features and APIs.
+# Each path ensures modularity and separation of concerns for maintainable development.
